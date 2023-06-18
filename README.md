@@ -23,5 +23,6 @@
 * React
 * Реализована аутентификация и авторизация через jwt токен.
 
+[Ссылка на макет](https://www.figma.com/file/5H3gsn5lIGPwzBPby9jAOo/Sprint-14-RU?node-id=0%3A1)
 
-[Ссылка на сайт](https://rust007-91.github.io/react-mesto-auth/)
+[Ссылка на сайт](https://rust007-91.github.io/sign-in)
