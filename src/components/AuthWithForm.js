@@ -1,7 +1,27 @@
 import {NavLink} from "react-router-dom";
+import {useState} from "react";
 
 function AuthWithForm(props) {
-    const { title, name, btnText, onSubmit } = props;
+    const { title, name, btnText, onSubmit, isLoading } = props;
+
+    const [formValue, setFormValue] = useState({
+        email: '',
+        password: '',
+    });
+
+    const handleChange = (evt) => {
+        const {name, value} = evt.target;
+
+        setFormValue({
+            ...formValue,
+            [name]: value,
+        });
+    }
+
+    const handleSubmit = (evt) => {
+        evt.preventDefault();
+        onSubmit(formValue);
+    };
 
     return (
         <>
@@ -11,12 +31,40 @@ function AuthWithForm(props) {
                         className={`auth__form`}
                         name={`form-${name}`}
                         noValidate
-                        onSubmit={onSubmit}
+                        onSubmit={handleSubmit}
                     >
                         <h2 className="auth__form-heading">{title}</h2>
                         {props.children}
 
-                        <button type="submit" className="auth__form-submit">
+                        <fieldset className="auth__form-fieldset">
+                            <input
+                                id="email_auth"
+                                type="email"
+                                className="auth__input"
+                                name="email"
+                                placeholder="Email"
+                                required
+                                onChange={handleChange}
+                                value={formValue.email}
+                            />
+                            <input
+                                id="password_auth"
+                                type="password"
+                                className="auth__input"
+                                name="password"
+                                placeholder="Пароль"
+                                minLength="2"
+                                maxLength="200"
+                                required
+                                onChange={handleChange}
+                                value={formValue.password}
+                            />
+                        </fieldset>
+
+                        <button
+                            disabled={isLoading}
+                            type="submit"
+                            className="auth__form-submit">
                             {btnText}
                         </button>
 

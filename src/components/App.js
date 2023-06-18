@@ -36,15 +36,17 @@ function App() {
     const navigate = useNavigate(); // редирект
 
     useEffect(() => {
-        Promise.all([api.getApiInfo(), api.getApiCard()])
-            .then((dataList) => {
-                const [dataInfo, dataCards] = dataList; // диструктурируем полученный массив данных
-                // запись данных профиля и карточки в их стэйты
-                setCurrentUser(dataInfo);
-                setCards(dataCards);
-            })
-            .catch((err) => alert(err));
-    }, []);
+        if(loggedIn) {
+            Promise.all([api.getApiInfo(), api.getApiCard()])
+                .then((dataList) => {
+                    const [dataInfo, dataCards] = dataList; // диструктурируем полученный массив данных
+                    // запись данных профиля и карточки в их стэйты
+                    setCurrentUser(dataInfo);
+                    setCards(dataCards);
+                })
+                .catch((err) => alert(err));
+        }
+    }, [loggedIn]);
 
     // Обработчики стейтов
     const handleEditAvatarClick = () => {
@@ -160,7 +162,9 @@ function App() {
 
     //обработчик регистрации
     const handleRegister = (formValue) => {
+        setLoading(true);
         const { email, password } = formValue;
+
         register(email, password)
             .then((data) => {
                 setRegisterState(true);
@@ -172,12 +176,17 @@ function App() {
                 setRegisterState(true);
                 setRegisterText("Что-то пошло не так!\n" + "Попробуйте ещё раз.");
                 setRegisterStatus(false);
+            })
+            .finally(() => {
+                setLoading(false);
             });
     };
 
     //обработчик авторизации
     const handleLogin = (formValue) => {
+        setLoading(true);
         const { email, password } = formValue;
+
         login(email, password)
             .then((data) => {
                 if (data.token) {
@@ -186,7 +195,10 @@ function App() {
                     navigate("/main", { replace: true });
                 }
             })
-            .catch((err) => alert(err));
+            .catch((err) => alert(err))
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     //обработчик проверки токена
@@ -226,11 +238,8 @@ function App() {
                         logOut={handleSignout}
                     />
                     <Routes>
-                        <Route path="/sign-in" element={<Login onSubmit={handleLogin} />} />
-                        <Route
-                            path="/sign-up"
-                            element={<Register onSubmit={handleRegister} />}
-                        />
+                        <Route path="/sign-in" element={<Login onSubmit={handleLogin} isLoading={isLoading}/>} />
+                        <Route path="/sign-up" element={<Register onSubmit={handleRegister} isLoading={isLoading}/>} />
                         <Route
                             path="/"
                             element={

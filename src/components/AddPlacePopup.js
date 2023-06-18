@@ -1,10 +1,8 @@
 import PopupWithForm from "./PopupWithForm";
 import { useContext, useEffect, useState } from "react";
-import { CurrentCardContext } from "../contexts/CurrentCardContext";
 import { CurrentLoadingContext } from "../contexts/CurrentLoadingContext";
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
-    const cards = useContext(CurrentCardContext); //Подписка на контекст CurrentCardContext
     const isLoading = useContext(CurrentLoadingContext);
 
     // стэйты полей новой карточки
@@ -33,7 +31,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
     useEffect(() => {
         setName("");
         setLink("");
-    }, [cards]);
+    }, [isOpen]);
 
     return (
         <PopupWithForm

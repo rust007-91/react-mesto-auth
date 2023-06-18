@@ -44,6 +44,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
             isOpen={isOpen}
             onClose={onClose}
             onSubmit={handleSubmit}
+            isLoading={isLoading}
         >
             <fieldset className="popup__form-fieldset popup__form-fieldset_edit">
                 <input

@@ -1,5 +1,5 @@
 function PopupWithForm(props) {
-    const { title, name, btnText, isOpen, onClose, onSubmit } = props;
+    const { title, name, btnText, isOpen, onClose, onSubmit, isLoading } = props;
 
     return (
         <>
@@ -13,7 +13,10 @@ function PopupWithForm(props) {
                     >
                         <h2 className="popup__form-heading">{title}</h2>
                         {props.children}
-                        <button type="submit" className="popup__form-submit">
+                        <button
+                            disabled={isLoading}
+                            type="submit"
+                            className="popup__form-submit">
                             {btnText}
                         </button>
                     </form>
