@@ -1,0 +1,30 @@
+.auth__input {
+    padding: 0 0 5px 0;
+    margin: 0;
+    border: none;
+    border-bottom: 2px solid #CCCCCC;;
+    font-weight: 400;
+    font-size: 14px;
+    color: #CCCCCC;
+    line-height: 17px;
+    box-sizing: border-box;
+    background: black;
+}
+
+.auth__input:nth-child(n) {
+    margin-top: 30px;
+}
+
+.auth__input:first-child {
+    margin-top: 0;
+}
+
+@media screen and (max-width: 580px) {
+    .auth__input:nth-child(n) {
+        margin-top: 34px;
+    }
+
+    .auth__input:first-child {
+        margin-top: 2px;
+    }
+}
